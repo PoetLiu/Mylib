@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <stdlib.h>
-#include "mylib.h"
+#include "mem.h"
+#include "locker.h"
+#include "locker_pthread.h"
 
 static int locker_pthread_lock(Locker *thiz);
 static int locker_pthread_unlock(Locker *thiz);

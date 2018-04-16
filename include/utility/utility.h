@@ -1,6 +1,8 @@
 #ifndef __UTILITY_H_
 #define __UTILITY_H_
 
+#include<netinet/in.h>
+
 typedef u_int32_t t_ipaddr;
 typedef unsigned char uchar;
 

@@ -8,7 +8,9 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <fcntl.h>
-#include "mylib.h"
+#include "debug.h"
+#include "mem.h"
+#include "net.h"
 
 int connect_timeout(int fd, const struct sockaddr * dest, int dlen,
 		struct timeval timeout) {

@@ -4,7 +4,9 @@
 #include <openssl/md5.h>
 #include <openssl/aes.h>
 #include <openssl/pem.h>
-#include "mylib.h"
+#include "debug.h"
+#include "mem.h"
+#include "crypto.h"
 
 uchar *MD5_encode(uchar *in, int inlen, uchar *out, int olen)
 {
@@ -276,6 +278,41 @@ static uchar private_key_test[] = "-----BEGIN PRIVATE KEY-----\n"
 "agZcmZp0oJonb7i512F0CnlGShXbTstX3iPfJ3Uyf3VhglGBUvnjY+RMXmedIxp2\n"
 "7ftr4YO+QYwD\n"
 "-----END PRIVATE KEY-----\n";
+
+unsigned char toBase64[] = {
+	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
+    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 
+    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 
+    'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/' };
+
+int igd_base64_encode (const unsigned char *in,unsigned int len,unsigned char *out,unsigned int *outlen)
+{
+    u_int32_t i,bits,oLen=0;
+    unsigned short c;
+
+    if (len <= 0)
+        return 0;
+    if (*outlen<(len/3+1)*4) return -1; 
+    for (c=oLen=bits=i=0;i<len;i++,in++)
+    {   
+        c<<=8;c&=0xff00;c|=*in;
+        bits+=8;
+        while (bits>=6)
+        {               
+            out[oLen++]=toBase64[(c>>(bits-6))&0x3f];
+            bits-=6;
+        }   
+    }   
+    if (bits>0)
+    {   
+        c<<=6-bits;
+        out[oLen++]=toBase64[c&0x3f];
+    }   
+    while (oLen%4)  out[oLen++]='=';
+    out[oLen]=0;
+    *outlen=oLen;
+    return 0;           
+}
 
 static int rsa_encrypt_test()
 {

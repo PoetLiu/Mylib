@@ -9,7 +9,9 @@
 
 #include <stdlib.h>
 #include <memory.h>
-#include "mylib.h"
+#include "mem.h"
+#include "locker.h"
+#include "list.h"
 
 struct _Node
 {

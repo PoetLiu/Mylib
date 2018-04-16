@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include "mylib.h"
+#include "mem.h"
+#include "queue.h"
 
 typedef struct _Node
 {

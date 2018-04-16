@@ -7,7 +7,10 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <dirent.h>
-#include "mylib.h"
+#include <ctype.h>
+#include <unistd.h>
+#include "mem.h"
+#include "utility.h"
 
 static int _rand(void)
 {
